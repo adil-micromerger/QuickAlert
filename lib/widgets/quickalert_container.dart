@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:quickalert/models/quickalert_options.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/utils/images.dart';
 import 'package:quickalert/widgets/quickalert_buttons.dart';
+
 
 class QuickAlertContainer extends StatelessWidget {
   final QuickAlertOptions options;
@@ -45,7 +47,10 @@ class QuickAlertContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(options.borderRadius!),
       ),
       clipBehavior: Clip.antiAlias,
-      width: options.width ?? MediaQuery.of(context).size.shortestSide,
+      width: options.width ?? MediaQuery
+          .of(context)
+          .size
+          .shortestSide,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [header, content],
@@ -82,6 +87,7 @@ class QuickAlertContainer extends StatelessWidget {
     if (options.customAsset != null) {
       anim = options.customAsset;
     }
+    final type = checkFileType(anim ?? "");
     return Container(
       width: double.infinity,
       height: 150,
@@ -89,10 +95,12 @@ class QuickAlertContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: options.headerBackgroundColor,
       ),
-      child: Image.asset(
-        anim ?? "",
-        fit: BoxFit.cover,
-      ),
+      child: type == 'json' ? Center( child:Lottie.asset(
+        anim ?? '',
+        width: 100,
+        height: 100,
+        fit: BoxFit.contain,
+      )) : Image.asset(anim ?? "", fit: BoxFit.cover,),
     );
   }
 
@@ -103,9 +111,13 @@ class QuickAlertContainer extends StatelessWidget {
       child: Text(
         '$title',
         textAlign: options.titleAlignment ?? TextAlign.center,
-        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: options.titleColor,
-                ) ??
+        style: Theme
+            .of(context)
+            .textTheme
+            .headlineSmall
+            ?.copyWith(
+          color: options.titleColor,
+        ) ??
             TextStyle(
               color: options.titleColor,
             ),
@@ -169,6 +181,16 @@ class QuickAlertContainer extends StatelessWidget {
         return null;
       default:
         return null;
+    }
+  }
+
+  String checkFileType(String anim) {
+    if (anim.endsWith('.json')) {
+      return 'json';
+    } else if (anim.endsWith('.gif')) {
+      return 'gif';
+    } else {
+      return '';
     }
   }
 }

@@ -18,6 +18,7 @@ class QuickAlertButtons extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           cancelBtn(context),
+          SizedBox(width: 8,),
           options.type != QuickAlertType.loading
               ? okayBtn(context)
               : const SizedBox.shrink(),
@@ -31,7 +32,7 @@ class QuickAlertButtons extends StatelessWidget {
       return const SizedBox();
     }
     final showCancelBtn =
-        options.type == QuickAlertType.confirm ? true : options.showCancelBtn!;
+    options.type == QuickAlertType.confirm ? true : options.showCancelBtn!;
 
     final okayBtn = buildButton(
         context: context,
@@ -53,7 +54,7 @@ class QuickAlertButtons extends StatelessWidget {
 
   Widget cancelBtn(context) {
     final showCancelBtn =
-        options.type == QuickAlertType.confirm ? true : options.showCancelBtn!;
+    options.type == QuickAlertType.confirm ? true : options.showCancelBtn!;
 
     final cancelBtn = buildButton(
         context: context,
@@ -85,25 +86,38 @@ class QuickAlertButtons extends StatelessWidget {
     );
 
     final okayBtn = MaterialButton(
+      elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
-      color: options.confirmBtnColor ?? Theme.of(context!).primaryColor,
+      color: options.confirmBtnColor ?? Theme
+          .of(context!)
+          .primaryColor,
       onPressed: onTap,
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(7.5),
+          padding: const EdgeInsets.all(3.5),
           child: btnText,
         ),
       ),
     );
 
-    final cancelBtn = GestureDetector(
-      onTap: onTap,
-      child: Center(
-        child: btnText,
-      ),
-    );
+    final cancelBtn = Padding(
+      padding: EdgeInsets.only(right: 5),
+      child: MaterialButton(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        color: Colors.grey,
+        onPressed: onTap,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(3.5),
+            child: btnText,
+          ),
+        ),
+      ),);
 
     return isOkayBtn ? okayBtn : cancelBtn;
   }

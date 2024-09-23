@@ -17,6 +17,7 @@ class QuickAlert {
     /// Title of the dialog
     String? title,
 
+
     /// Text of the dialog
     String? text,
 
@@ -132,18 +133,20 @@ class QuickAlert {
 
     Widget child = WillPopScope(
       onWillPop: () async {
-        options.timer?.cancel();
-        if (options.type == QuickAlertType.loading &&
-            !disableBackBtn &&
-            showCancelBtn) {
-          if (options.onCancelBtnTap != null) {
-            options.onCancelBtnTap!();
-            return false;
-          }
-        }
-        return !disableBackBtn;
+        return !disableBackBtn!;
+        // options.timer?.cancel();
+        // if (options.type == QuickAlertType.loading &&
+        //     !disableBackBtn &&
+        //     showCancelBtn) {
+        //   if (options.onCancelBtnTap != null) {
+        //     options.onCancelBtnTap!();
+        //     return false;
+        //   }
+        // }
+        // return !disableBackBtn;
       },
       child: AlertDialog(
+        scrollable: true,
         contentPadding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(borderRadius),
